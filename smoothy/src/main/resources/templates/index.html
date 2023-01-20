@@ -1,0 +1,54 @@
+<div th:switch="${smoothies}">
+	<h2 th:case="null">No Smoothies yet!</h2>
+	<div th:case="*">
+		<h2>Smoothies</h2>
+		<table>
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Title</th>
+					<th>Description</th>
+					<th>BasicDetails</th>
+					<th>NutritionValues</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="smoothie : ${smoothies}">
+					<td th:text="${smoothie.id}"></td>
+					<td th:text="${smoothie.title}"></td>
+					<td th:text="${smoothie.description}"></td>
+					<td th:text="${smoothie.basicDetails}"></td>
+					<td th:text="${smoothie.nutritionValues}"></td>
+<!--                      <td><input type="text" th:text="${smoothie.basicDetails}" placeholder="${smoothie.basicDetails}" /></td>-->
+
+<!--					<div class="input-group">-->
+<!--						<input type="text" th:value="*{smoothie.basicDetails}" />-->
+<!--						<div class="input-group-btn">-->
+<!--							<ul class="dropdown-menu dropdown-menu-right">-->
+<!--								<li><a-->
+<!--										th:href="@{/edit/{id}/{basicdetails}(id=${smoothie.id},basicdetails=${smoothie.basicDetails})}">Edit</a>-->
+<!--								</li>-->
+<!--							</ul>-->
+<!--						</div>-->
+<!--					</div>-->
+
+					<td><form th:action="@{/edit-basicdetails}" method="post">
+						<input type="text" th:name="basicdetails" th:value="*{smoothie.basicDetails}"/>
+						<input type="hidden" th:name="id" th:value="${smoothie.id}"/>
+						<input type="submit" value="edit-basicdetails"/>
+					</form>
+					</td>
+					
+					<td><form th:action="@{/edit-nutritionvalue}" method="post">
+						<input type="text" th:name="nutritionValues" th:value="*{smoothie.nutritionValues}"/>
+						<input type="hidden" th:name="id" th:value="${smoothie.id}"/>
+						<input type="submit" value="edit-nutritionvalue"/>
+					</form>
+					</td>
+					
+					<td><a th:href="@{/delete/{id}(id=${smoothie.id})}">Delete</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
